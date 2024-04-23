@@ -14,14 +14,24 @@ h1{
     margin-top: 6%;
 }
 
+
+
+.health-container{
+    position: relative;
+    margin: auto;
+    /* background-color: red; */
+    align-items: center;
+    margin-top: 30px;
+}
+
 #Boss-Health{
     position: absolute;
     font-size: 1.5em;
     font-weight: 600;
     text-align: center;
     z-index: 2;
-    left: 48%;
-    top: 25%;
+    left: 49%;
+    top: -7px;
     background: none;
     color: #f2f2ff;
     background: rgba( 0, 0, 0, 0.012 );
@@ -29,20 +39,21 @@ h1{
     -webkit-backdrop-filter: blur( 20px );
 }
 
-
 .health-bar{
     width: 50%;
     background-color: rgba(255, 45, 45, 0.737);
     height: 60px;
-    position: absolute;
-    top: 26%;
-    left: 25%;
+    margin: auto;
 }
 
 .green{
     background-color: rgb(0, 105, 0);
     width: 50%;
     z-index: 1;
+    position: absolute;
+    top: 0; /* Align green bar with top of the red bar */
+    left: 25%;
+
 }
 
 
@@ -55,7 +66,7 @@ h1{
     align-items: center;
     justify-content: center;
     margin: auto;
-    margin-top: 12%;
+    margin-top: 5%;
 }
 
 
@@ -114,6 +125,7 @@ h1{
 .endgame {
     display: none;
     width:  30%;
+    min-width: 300px;
     top: 30%;
     position: absolute;
     left: 41%;
@@ -251,7 +263,8 @@ margin-left: 10px;
   }
 }
 
-@media (max-width: 900px) {
+
+@media screen and (max-width: 900px) {
   #Boss-Health{
     left: 46%;
   }
@@ -262,7 +275,8 @@ margin-left: 10px;
     margin-top: 20%;
   }
 }
-@media (max-width: 700px) {
+
+@media screen and (max-width: 700px) {
   h1{
     margin-top: 13%;
     font-size: 30px;
