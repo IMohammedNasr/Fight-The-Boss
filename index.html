@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Fight The Boss</title>
+        
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="icon.jpeg"  type="image/png">
+        
+    </head>
+    
+<body>
+        
+    <button onClick="startGame()" style="height: 30px; cursor: pointer;">New Game</button>
+    <!-- Health Bar -->
+    <h1>Boss Health</h1>
+    <p id="Boss-Health">100</p>
+    <div class="health-bar red"></div>
+    <div class="health-bar green" id="green-health"></div>
+
+    <div class="details-container">
+        <!-- AI Bot  -->
+        <div class="action-container AI">
+            <div class="player-name AI">
+                <hr class="empty-line AI"></hr>
+                <p>Ai Bot</p>
+                <hr class="empty-line AI"></hr>
+            </div>
+            <div class="action-bar AI">
+                <div class="action-row AI">
+                    <p class="action-title AI">
+                        Attack
+                    </p>
+                    <div class="buttons AI">
+                        <button class="to-disable random-number ai-attacking-btn">
+                            10
+                        </button>
+                        <button class="to-disable random-number ai-attacking-btn">
+                            10
+                        </button>
+                        <button class="to-disable random-number ai-attacking-btn">
+                            10
+                        </button>
+                    </div>
+                </div>
+                <div class="action-row">
+                    <p class="action-title">
+                        Heal
+                    </p>
+                    <div class="buttons AI">
+                        <button class="to-disable random-number ai-healing-btn">
+                            10
+                        </button>
+                        <button class="to-disable random-number ai-healing-btn">
+                            10
+                        </button>
+                    </div>
+                </div>
+                <p id="AI-Healing-Times">10 Healing remaining</p>
+            </div>
+        </div>
+
+        <!-- Human Player -->
+        <div class="action-container Human">
+            <div class="player-name Human">
+                <hr class="empty-line Human"></hr>
+                <p>Player</p>
+                <hr class="empty-line Human"></hr>
+            </div>
+            <div class="action-bar Human">
+                <div class="action-row Human">
+                    <p class="action-title">
+                        Attack
+                    </p>
+                    <div class="buttons Human">
+                        <button 
+                        class="to-disable random-number human-attacking-btn" 
+                        onclick="turnClick('humanPlayer', parseInt(this.textContent), 'attack')"
+                        >
+                            10
+                        </button>
+                        <button 
+                        class="to-disable random-number human-attacking-btn" 
+                        onclick="turnClick('humanPlayer', parseInt(this.textContent), 'attack')"
+                        
+                        >
+                            10
+                        </button>
+                        <button 
+                        class="to-disable random-number human-attacking-btn" 
+                        onclick="turnClick('humanPlayer', parseInt(this.textContent), 'attack')"
+                        >
+                            10
+                        </button>
+                    </div>
+                </div>
+                <div class="action-row">
+                    <p class="action-title">
+                        Heal
+                    </p>
+                    <div class="buttons">
+                        <button 
+                        class="to-disable random-number human-healing-btn" 
+                        onclick="turnClick('humanPlayer', parseInt(this.textContent), 'heal')"
+                        >
+                            10
+                        </button>
+                        <button 
+                        class="to-disable random-number human-healing-btn" 
+                        onclick="turnClick('humanPlayer', parseInt(this.textContent), 'heal')"
+                        >
+                            10
+                        </button>
+                    </div>
+                </div>
+                <p id="Human-Healing-Times">10 Healing remaining</p>
+            </div>
+        </div>
+    </div>
+
+
+	<div class="endgame">
+		<div class="text"></div>
+	</div>
+	<!-- <div class="bot-thinking">
+        <video autoplay loop muted playsinline>
+            <source src="Nasr-Thinking.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+		<div class="thinking-text">The AI is thinking...</div>
+	</div> -->
+    <!-- <div class = "selectSym">
+    <p>Select symbol:</p>
+      <button onClick="selectSym('X')">X</button>
+      <button onClick="selectSym('O')">O</button>
+    </div> -->
+
+  <script src="script.js"></script>
+</body>
+</html>

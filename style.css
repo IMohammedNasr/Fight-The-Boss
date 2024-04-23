@@ -1,0 +1,270 @@
+*{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #889787;
+    color: #101010;
+}
+
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+h1{
+    text-align: center;
+    margin-top: 6%;
+}
+
+#Boss-Health{
+    position: absolute;
+    font-size: 1.5em;
+    font-weight: 600;
+    text-align: center;
+    z-index: 2;
+    left: 48%;
+    top: 25%;
+    background: none;
+    color: #f2f2ff;
+    background: rgba( 0, 0, 0, 0.012 );
+    backdrop-filter: blur( 20px );
+    -webkit-backdrop-filter: blur( 20px );
+}
+
+
+.health-bar{
+    width: 50%;
+    background-color: rgba(255, 45, 45, 0.737);
+    height: 60px;
+    position: absolute;
+    top: 26%;
+    left: 25%;
+}
+
+.green{
+    background-color: rgb(0, 105, 0);
+    width: 50%;
+    z-index: 1;
+}
+
+
+/* Bottom Section (Action Bar) */
+
+.details-container{
+    display: flex;
+    /* background-color: red; */
+    width: 97%;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 12%;
+}
+
+
+.action-container{
+    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    width: min-content;
+    width: 100%;
+}
+
+
+.player-name{
+    font-size: 2em;
+    font-weight: 700;
+    display: flex;
+    width: 100%;
+    /* background-color: red; */
+    align-items: center;
+}
+
+.empty-line{
+    /* border: none; */
+    border: solid 2px #422800;
+    border-radius: 32px;
+    width: 25%;
+}
+
+.action-row{
+    display: flex;
+    align-items: center;
+    /* width: min-content; */
+    width: 100%
+}
+
+  
+.action-title{
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.buttons{
+    padding-left: 5%;
+    display: flex;
+    width: min-content;
+    width: 100%;
+}
+
+#Human-Healing-Times, #AI-Healing-Times{
+    font-size: 1.1em;
+}
+
+
+  
+.endgame {
+    display: none;
+    width:  30%;
+    top: 30%;
+    position: absolute;
+    left: 41%;
+    margin-left: -100px;
+    text-align: center;
+    border-radius: 5px;
+    height: 300px;
+    color: white;
+    background-color: rgb(32, 0, 113);
+    font-size: 2em;
+    z-index: 3;
+    background: rgba( 6, 0, 0, 0.2 );
+    background: rgba( 6, 0, 0, 0.55 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 12px );
+    -webkit-backdrop-filter: blur( 12px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.text{
+    background: none;
+    color: white;
+    padding-top: 120px;
+    font-weight: 600;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+}
+
+/* .selectSym{
+display: none;
+width: 220px;
+top: 110px;
+background-color: rgba(205, 133, 63, 0.8);
+position: absolute;
+left: 50%;
+margin-left: -110px;
+padding-top: 10px;
+padding-bottom: 50px;
+text-align: center;
+border-radius: 5px;
+color: yellow;
+font-size: 2em; 
+}
+
+.selectSym button{
+font-family: "Comic Sans MS", cursive, sans-serif;
+font-size:  50px;
+width: 70px;
+}
+
+.selectSym  button:first-of-type {
+margin-right: 10px;
+}
+.selectSym  button:last-of-type {
+margin-left: 10px;
+} */
+
+/* -------------------------- Bot is thinking --------------------------*/
+/* video {
+    width: 300px; 
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.bot-thinking{
+    display: none;
+    position: absolute;
+    top: 13%;
+    left: 2%;
+    align-items: center;
+    text-align: center;
+}
+
+.thinking-text{
+    margin-top: 8px;
+    font-weight: 400;
+} */
+
+
+/* Style for Buttons */
+.buttons.AI{
+    pointer-events: none;
+    opacity: 50%;
+}
+
+.buttons.AI button{
+    color: #101010;
+}
+
+.buttons button {
+    color: #101010;
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 30px;
+    margin-left: 8%;
+    box-shadow: #422800 4px 4px 0 0;
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    min-width: 120px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.buttons button:hover {
+     background-color: #fff;
+}
+
+.buttons button:active {
+    box-shadow: #422800 2px 2px 0 0;
+    transform: translate(2px, 2px);
+}
+
+/* @media (min-width: 768px) {
+  .buttons button {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+} */
+
+@media (max-width: 1300px) {
+  .details-container{
+    flex-direction: column;
+  }
+  .action-container.Human{
+    order: -1;
+  }
+}
+
+@media (max-width: 900px) {
+  #Boss-Health{
+    left: 46%;
+  }
+  .buttons button{
+    min-width: 70px;
+  }
+  .details-container{
+    margin-top: 20%;
+  }
+}
+@media (max-width: 700px) {
+  h1{
+    margin-top: 13%;
+    font-size: 30px;
+  }
+}

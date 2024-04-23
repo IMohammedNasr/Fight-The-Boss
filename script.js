@@ -1,0 +1,298 @@
+let humanPlayer = 'humanPlayer';
+let AiPlayer = 'AiPlayer';
+let bossStartingHealth;
+let bossCurrentHealthSoFar;
+let humanHealing;
+let AIHealing;
+
+startGame();
+
+
+function startGame() {
+  // reset AI buttons color
+  document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+    btn.style.backgroundColor = "#fbeee0";
+  });
+  document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+      btn.style.backgroundColor = "#fbeee0";
+  });
+  //remove winner window
+  document.querySelector(".endgame").style.display = "none";
+  document.querySelector(".endgame .text").innerText = "";
+  document.querySelectorAll(".to-disable").forEach(element =>{
+    element.style.pointerEvents = "auto";
+  })
+  // random-numbers for buttons
+  document.querySelectorAll('.random-number').forEach( element => {
+    let value = Math.floor(Math.random() * 15 + 1);
+    element.textContent = value;
+  })
+  // random Boss health
+  bossStartingHealth = Math.floor(Math.random() * 60 + 76);
+  document.getElementById('Boss-Health').textContent = bossStartingHealth;
+  document.getElementById("green-health").style.width = "50%";
+  // reset Healing Attemps
+  let humanElement = document.getElementById("Human-Healing-Times");
+  let aiElement = document.getElementById("AI-Healing-Times");
+  let randomAttemps = Math.floor(Math.random() * 6 + 1);
+  humanElement.textContent = `${randomAttemps} Healing remaining`
+  aiElement.textContent = `${randomAttemps} Healing remaining`
+  AIHealing = randomAttemps;
+  humanHealing = randomAttemps;
+  // rest Human Healing Opacity
+  document.querySelectorAll('.human-healing-btn').forEach(element => {
+    element.style.pointerEvents = "auto";
+    element.style.opacity = "100%";
+  })
+}
+
+function attack(player, dmg){
+  let prevHealth = parseInt(document.getElementById("Boss-Health").innerHTML);
+  let prevPercentage = document.getElementById("green-health").style.width;
+  prevPercentage = parseInt(prevPercentage.substring(0, prevPercentage.length - 1));
+  let newHealth = Math.max(prevHealth - dmg, 0);
+  let ratio = newHealth / prevHealth;
+  document.getElementById("green-health").style.width = `${ratio * prevPercentage}%`;
+  console.log(document.getElementById("green-health").style.width);
+  document.getElementById('Boss-Health').textContent = newHealth;
+  bossCurrentHealthSoFar = newHealth;
+  if(player === AiPlayer){
+    // reset AI buttons color
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    // Coloring the new button
+    let found = 0;
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+      let amount = parseInt(btn.textContent);
+      if(dmg === amount && !found){
+        btn.style.backgroundColor = "orange";
+        found = 1;
+      }
+    });
+  }
+}
+
+function heal(player, healing){
+  if(player === humanPlayer){
+    // decreasing attemtps;
+    let element = document.getElementById("Human-Healing-Times");
+    let attempts = parseInt(element.textContent.match(/\d+/)[0]) - 1;
+    console.log(`Can Heal ${attempts}`)
+    if(attempts < 0){
+      return;
+    }
+    humanHealing--;
+    console.log(attempts);
+    element.textContent = `${attempts} Healing remaining`;
+    if(attempts === 0){
+      document.querySelectorAll('.human-healing-btn').forEach(element => {
+        element.style.pointerEvents = "none";
+        element.style.opacity = "50%";
+      })
+    }
+  }else{
+    // reset AI buttons color
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    // decreasing attemtps;
+    let element = document.getElementById("AI-Healing-Times");
+    let attempts = parseInt(element.textContent.match(/\d+/)[0]) - 1;
+    if(attempts < 0){
+      return;
+    }
+    AIHealing--;
+    console.log(attempts);
+    element.textContent = `${attempts} Healing remaining`;
+    // Coloring the new Button
+    let found = 0;
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+      let amount = parseInt(btn.textContent);
+      if(healing === amount && !found){
+        btn.style.backgroundColor = "orange";
+        found = 1;
+      }
+    });
+  }
+  // Healing Process
+  let prevHealth = parseInt(document.getElementById("Boss-Health").innerHTML);
+  let prevPercentage = "50%"
+  prevPercentage = parseInt(prevPercentage.substring(0, prevPercentage.length - 1));
+  let newHealth = Math.max(prevHealth + healing, 0);
+  let ratio = newHealth / bossStartingHealth;
+  let newWidth = Math.min(50, ratio * prevPercentage);
+  console.log(`NewWidth = ${newWidth}`)
+  document.getElementById("green-health").style.width = `${Math.min(50, ratio * Math.max(1, prevPercentage))}%`;
+  console.log(`${Math.min(50, ratio * prevPercentage)}%`);
+  document.getElementById('Boss-Health').textContent = newHealth;
+  bossCurrentHealthSoFar = newHealth;
+  console.log(prevHealth);
+  bossStartingHealth = Math.max(bossStartingHealth, newHealth)
+}
+
+
+// User Click To do an action
+function turnClick(player, amount, type) {
+  let isCorrectMove = type === 'attack' || (type === 'heal' && player === humanPlayer && humanHealing != 0) ? true : false;
+  // isCorrectMove = isCorrectMove || (type === 'heal' && player === 'AiPlayer' && AIHealing != 0);
+
+  // Disable buttons until finish checking the move
+  document.querySelectorAll(".to-disable").forEach(element =>{
+    element.style.pointerEvents = "none";
+  })
+
+  if (isCorrectMove) {
+    turn(type, player, amount);
+    if(!checkWin(bossCurrentHealthSoFar, humanPlayer)){
+      bestToPlay = bestMove();
+      console.log(bestToPlay)
+      turn(bestToPlay.type, AiPlayer, bestToPlay.amount);
+      // Turn on buttons so user can play next move
+      if(!checkWin(bossCurrentHealthSoFar, AiPlayer))
+      document.querySelectorAll(".to-disable").forEach(element =>{
+        if(element.classList.contains("human-healing-btn")){
+          if(humanHealing > 0)
+            element.style.pointerEvents = "auto";
+        }else{
+          element.style.pointerEvents = "auto";
+        }
+      })
+    }
+  }
+}
+
+// Do the turn process
+
+function turn(type, player, amount) {
+  if(type == 'attack'){
+    attack(player, amount)
+    let gameWon = checkWin(bossCurrentHealthSoFar, player);
+    if (gameWon) gameOver(gameWon);
+  }else{
+    heal(player, amount)
+  }
+}
+
+// Check if a player has already won
+
+function checkWin(health, player) {
+  let gameWon = null;
+  if(health <= 0)
+    gameWon = player;
+  return gameWon;
+}
+
+// Game over process window
+
+function gameOver(gameWon){
+  document.querySelectorAll(".to-disable").forEach(element =>{
+    element.style.pointerEvents = "none";
+  })
+  declareWinner(gameWon === humanPlayer ? "You Won!" : "You Lost");
+}
+
+function declareWinner(whoWon) {
+  document.querySelector(".endgame").style.display = "block";
+  document.querySelector(".endgame .text").innerText = whoWon;
+}
+
+function bestMove(){
+  let RET = minimax(AiPlayer, bossCurrentHealthSoFar, AIHealing, humanHealing, 0);
+  return RET;
+}
+  
+
+// Define a memoization table to store computed scores
+let memo = {};
+
+function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPlayed) {
+  // Check if the current state is already memoized
+  let memoKey = `${player}-${bossHealth}-${aiHealAttempts}-${humanHealAttempts}-${turnsPlayed}`;
+  if (memo[memoKey]) {
+    return memo[memoKey];
+  }
+
+  const gameState = bossHealth <= 0 ? true : false;
+  
+  if (gameState === true && player === AiPlayer) {
+    return { score: turnsPlayed - 100 };
+  } else if (gameState === true && player === humanPlayer) {
+    return { score: 100 - turnsPlayed};
+  }
+  
+  var moves = [];
+  
+  if (player === AiPlayer) {
+    if (aiHealAttempts > 0) {
+      // AI can heal
+      document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(humanPlayer, bossHealth + amount, aiHealAttempts - 1, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'heal', amount: amount });
+      });
+      document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(humanPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    } else {
+      // AI cannot heal, attack with one of the three values
+      document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(humanPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    }
+  } else {
+    if (humanHealAttempts > 0) {
+      // Human can heal
+      document.querySelectorAll('.human-healing-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(AiPlayer, bossHealth + amount, aiHealAttempts, humanHealAttempts - 1, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'heal', amount: amount });
+      });
+      document.querySelectorAll('.human-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    } else {
+      // Human cannot heal, attack with one of the three values
+      document.querySelectorAll('.human-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    }
+  }
+  
+  let bestMove, bestScore;
+  if (player === AiPlayer) {
+    bestScore = -9000000;
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
+  } else {
+    bestScore = 9000000;
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
+  }
+  
+  // Memoize the result before returning
+  memo[memoKey] = moves[bestMove];
+  return moves[bestMove];
+}
