@@ -272,6 +272,36 @@ h1{
     transform: translate(2px, 2px);
 }
 
+#restart-btn{
+    font-size: 1.07em;
+    font-weight: 500;
+    border: none;
+    margin: 10px 0 0 10px;
+    cursor: pointer;
+    position: relative;
+    background: none;
+    z-index: 5;
+}
+
+#restart-btn::before {
+    content: '';
+    background-color: #fbeee04d;
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 8px;
+    z-index: -1;
+    transition: all .3s ease-in-out;
+    border-radius: 4px;
+  }
+  
+  #restart-btn:hover::before {
+    bottom: 0;
+    background-color: #fbeee0;
+    height: 100%;
+  }
+
 /* @media (min-width: 768px) {
   .buttons button {
     min-width: 120px;
