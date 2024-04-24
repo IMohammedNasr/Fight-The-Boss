@@ -12,7 +12,7 @@
     
 <body>
         
-    <button onClick="startGame()" style="height: 30px; cursor: pointer;">New Game</button>
+    <button onClick="startNewGame()" style="height: 30px; cursor: pointer;">New Game</button>
     <!-- Health Bar -->
     <h1>Boss Health</h1>
     <div class="health-container">
@@ -132,11 +132,11 @@
           </video>
 		<div class="thinking-text">The AI is thinking...</div>
 	</div> -->
-    <!-- <div class = "selectSym">
-    <p>Select symbol:</p>
-      <button onClick="selectSym('X')">X</button>
-      <button onClick="selectSym('O')">O</button>
-    </div> -->
+    <div class = "selectWhoStarts">
+    <p>First Turn</p>
+      <button onclick="selectTurn('H')">Me</button>
+      <button onclick="selectTurn('B')">Bot</button>
+    </div>
 
   <script src="script.js"></script>
 </body>
