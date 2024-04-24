@@ -4,6 +4,10 @@ let bossStartingHealth;
 let bossCurrentHealthSoFar;
 let humanHealing;
 let AIHealing;
+let humanAttackingValues = [0, 0, 0];
+let AiAttackingValues = [0, 0, 0];
+let humanHealingValues = [0, 0];
+let AiHealingValues = [0, 0];
 
 startGame();
 
@@ -22,13 +26,38 @@ function startGame() {
   document.querySelectorAll(".to-disable").forEach(element =>{
     element.style.pointerEvents = "auto";
   })
-  // random-numbers for buttons
-  document.querySelectorAll('.random-number').forEach( element => {
-    let value = Math.floor(Math.random() * 15 + 1);
-    element.textContent = value;
+  // random-numbers for healing Buttons;
+  let idx = 0;
+  for(var i=0; i<2; i++){
+    humanHealingValues[i] = (Math.floor(Math.random() * 15 + 1));
+  }
+  document.querySelectorAll('.human-healing-btn').forEach( element => {
+    element.textContent = humanHealingValues[idx++];
+  })
+  idx = 0;
+  for(var i=0; i<3; i++){
+    humanAttackingValues[i] = (Math.floor(Math.random() * 15 + 1));
+  }
+  document.querySelectorAll('.human-attacking-btn').forEach( element => {
+    element.textContent = humanAttackingValues[idx++];
+  })
+  idx = 0;
+  for(var i=0; i<2; i++){
+    AiHealingValues[i] = (Math.floor(Math.random() * 15 + 1));
+  }
+  document.querySelectorAll('.ai-healing-btn').forEach( element => {
+    element.textContent = AiHealingValues[idx++];
+  })
+  idx = 0;
+  for(var i=0; i<3; i++){
+    AiAttackingValues[i] = (Math.floor(Math.random() * 15 + 1));
+  }
+  document.querySelectorAll('.ai-attacking-btn').forEach( element => {
+    element.textContent = AiAttackingValues[idx++];
   })
   // random Boss health
   bossStartingHealth = Math.floor(Math.random() * 60 + 76);
+  bossCurrentHealthSoFar = bossStartingHealth;
   document.getElementById('Boss-Health').textContent = bossStartingHealth;
   document.getElementById("green-health").style.width = "50%";
   // reset Healing Attemps
@@ -49,6 +78,8 @@ function startGame() {
 function attack(player, dmg){
   let prevHealth = parseInt(document.getElementById("Boss-Health").innerHTML);
   let prevPercentage = document.getElementById("green-health").style.width;
+  if(prevHealth != bossCurrentHealthSoFar)
+      prevHealth = bossCurrentHealthSoFar;
   prevPercentage = parseInt(prevPercentage.substring(0, prevPercentage.length - 1));
   let newHealth = Math.max(prevHealth - dmg, 0);
   let ratio = newHealth / prevHealth;
@@ -123,6 +154,8 @@ function heal(player, healing){
   }
   // Healing Process
   let prevHealth = parseInt(document.getElementById("Boss-Health").innerHTML);
+  if(prevHealth != bossCurrentHealthSoFar)
+      prevHealth = bossCurrentHealthSoFar;
   let prevPercentage = "50%"
   prevPercentage = parseInt(prevPercentage.substring(0, prevPercentage.length - 1));
   let newHealth = Math.max(prevHealth + healing, 0);
@@ -138,8 +171,31 @@ function heal(player, healing){
 }
 
 
+// Check user didn't change numbers
+function checkValidate(){
+  let idx = 0;
+  document.querySelectorAll('.human-healing-btn').forEach( element => {
+    element.textContent = humanHealingValues[idx++];
+  })
+  idx = 0;
+  document.querySelectorAll('.human-attacking-btn').forEach( element => {
+    element.textContent = humanAttackingValues[idx++];
+  })
+  idx = 0;
+  document.querySelectorAll('.ai-healing-btn').forEach( element => {
+    element.textContent = AiHealingValues[idx++];
+  })
+  idx = 0;
+  document.querySelectorAll('.ai-attacking-btn').forEach( element => {
+    element.textContent = AiAttackingValues[idx++];
+  })
+}
+
 // User Click To do an action
-function turnClick(player, amount, type) {
+function turnClick(player, element, type) {
+  checkValidate();
+  type = element.classList.contains("human-healing-btn") ? 'heal' : 'attack';
+  player = element.classList.contains("human-turn-btn") ? 'humanPlayer' : 'AiPlayer';
   let isCorrectMove = type === 'attack' || (type === 'heal' && player === humanPlayer && humanHealing != 0) ? true : false;
   // isCorrectMove = isCorrectMove || (type === 'heal' && player === 'AiPlayer' && AIHealing != 0);
 
@@ -149,8 +205,9 @@ function turnClick(player, amount, type) {
   })
 
   if (isCorrectMove) {
-    turn(type, player, amount);
+    turn(type, player, parseInt(element.textContent));
     if(!checkWin(bossCurrentHealthSoFar, humanPlayer)){
+      checkValidate();
       bestToPlay = bestMove();
       console.log(bestToPlay)
       turn(bestToPlay.type, AiPlayer, bestToPlay.amount);
