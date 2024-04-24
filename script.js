@@ -190,6 +190,11 @@ function checkValidate(){
   document.querySelectorAll('.ai-attacking-btn').forEach( element => {
     element.textContent = AiAttackingValues[idx++];
   })
+  //set healing attemps
+  let element = document.getElementById("Human-Healing-Times");
+  let element2 = document.getElementById("AI-Healing-Times");
+  element.textContent = `${humanHealing} Healing remaining`;
+  element2.textContent = `${AIHealing} Healing remaining`;
 }
 
 // User Click To do an action
