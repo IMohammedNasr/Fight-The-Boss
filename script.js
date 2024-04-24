@@ -24,7 +24,8 @@ function startGame() {
   document.querySelector(".endgame").style.display = "none";
   document.querySelector(".endgame .text").innerText = "";
   document.querySelectorAll(".to-disable").forEach(element =>{
-    element.style.pointerEvents = "auto";
+    if(element.classList.contains("human-turn-btn"))
+      element.style.pointerEvents = "auto";
   })
   // random-numbers for healing Buttons;
   let idx = 0;
@@ -214,13 +215,15 @@ function turnClick(player, element, type) {
       // Turn on buttons so user can play next move
       if(!checkWin(bossCurrentHealthSoFar, AiPlayer))
       document.querySelectorAll(".to-disable").forEach(element =>{
-        if(element.classList.contains("human-healing-btn")){
-          if(humanHealing > 0)
+        if(element.classList.contains("human-turn-btn")){
+          if(element.classList.contains("human-healing-btn")){
+            if(humanHealing > 0)
+              element.style.pointerEvents = "auto";
+          }else{
             element.style.pointerEvents = "auto";
-        }else{
-          element.style.pointerEvents = "auto";
+          }
         }
-      })
+        })
     }
   }
 }
