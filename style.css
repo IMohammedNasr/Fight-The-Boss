@@ -122,7 +122,7 @@ h1{
 
 
   
-.endgame {
+.endgame, .selectWhoStarts{
     display: none;
     width:  30%;
     min-width: 300px;
@@ -155,34 +155,40 @@ h1{
     letter-spacing: 2px;
 }
 
-/* .selectSym{
-display: none;
-width: 220px;
-top: 110px;
-background-color: rgba(205, 133, 63, 0.8);
-position: absolute;
-left: 50%;
-margin-left: -110px;
-padding-top: 10px;
-padding-bottom: 50px;
-text-align: center;
-border-radius: 5px;
-color: yellow;
-font-size: 2em; 
+.selectWhoStarts{
+    display: block;
 }
 
-.selectSym button{
-font-family: "Comic Sans MS", cursive, sans-serif;
-font-size:  50px;
-width: 70px;
+.selectWhoStarts p{
+    font-size: 40px;
+    font-weight: 700;
+    background: none;
+    color: white;
 }
 
-.selectSym  button:first-of-type {
-margin-right: 10px;
+.selectWhoStarts button{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size:  40px;
+    padding: 10px 30px;
+    margin-top: 20px;
+    border: none;
+    background-color: #fbeee0;
+    border-radius: 8px;
+    cursor: pointer;
 }
-.selectSym  button:last-of-type {
-margin-left: 10px;
-} */
+
+
+.selectWhoStarts  button:first-of-type {
+    margin-right: 20px;
+}
+.selectWhoStarts  button:last-of-type {
+    margin-left: 20px;
+}
+
+.selectWhoStarts button:hover{
+    transform: scale(1.01);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(255, 255, 255, 0.3) 0px 3px 7px -3px;
+}
 
 /* -------------------------- Bot is thinking --------------------------*/
 /* video {
@@ -218,6 +224,7 @@ margin-left: 10px;
 }
 
 .buttons button {
+    pointer-events: none;
     color: #101010;
     background-color: #fbeee0;
     border: 2px solid #422800;
@@ -261,6 +268,15 @@ margin-left: 10px;
   .action-container.Human{
     order: -1;
   }
+  .selectWhoStarts button{
+    font-size: 30px;
+  }
+  .selectWhoStarts  button:first-of-type {
+    margin-right: 10px;
+    }
+    .selectWhoStarts  button:last-of-type {
+        margin-left: 10px;
+    }
 }
 
 
@@ -276,7 +292,25 @@ margin-left: 10px;
   }
 }
 
+@media screen and (max-width: 400px) {
+  .selectWhoStarts button{
+        font-size: 25px;
+    }
+    .selectWhoStarts  button:first-of-type {
+        margin-right: 10px;
+    }
+    .selectWhoStarts  button:last-of-type {
+        margin-left: 10px;
+    }
+}
+
 @media screen and (max-width: 700px) {
+  h1{
+    margin-top: 13%;
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 350) {
   h1{
     margin-top: 13%;
     font-size: 30px;
