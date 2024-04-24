@@ -9,6 +9,7 @@ let AiAttackingValues = [0, 0, 0];
 let humanHealingValues = [0, 0];
 let AiHealingValues = [0, 0];
 let startTurn;
+let difficulty;
 let memo = {};
 
 
@@ -18,8 +19,18 @@ function selectTurn(who){
   startGame();
 }
 
+function showTurnSelection(){
+  document.querySelector('.selectWhoStarts').style.display = "block";
+}
+
+function chooseDiff(choice){
+  difficulty = choice;
+  document.querySelector('.selectDifficulty').style.display = "none";
+  showTurnSelection();
+}
+
 function startNewGame(){
-    document.querySelector('.selectWhoStarts').style.display = "block";
+    document.querySelector('.selectDifficulty').style.display = "block";
     // reset AI buttons color
     document.querySelectorAll('.ai-healing-btn').forEach(btn => {
       btn.style.backgroundColor = "#fbeee0";
@@ -74,14 +85,14 @@ function startGame() {
   // random-numbers for healing Buttons;
   let idx = 0;
   for(var i=0; i<2; i++){
-    humanHealingValues[i] = (Math.floor(Math.random() * 15 + 1));
+    humanHealingValues[i] = (Math.floor(Math.random() * 20 + 1));
   }
   document.querySelectorAll('.human-healing-btn').forEach( element => {
     element.textContent = humanHealingValues[idx++];
   })
   idx = 0;
   for(var i=0; i<3; i++){
-    let num = (Math.floor(Math.random() * 15 + 1));
+    let num = (Math.floor(Math.random() * 20 + 1));
     humanAttackingValues[i] = num;
   }
   document.querySelectorAll('.human-attacking-btn').forEach( element => {
@@ -102,7 +113,7 @@ function startGame() {
     element.textContent = humanAttackingValues[idx++];
   })
   // random Boss health
-  bossStartingHealth = Math.floor(Math.random() * 60 + 76);
+  bossStartingHealth = Math.floor(Math.random() * 76 + 76);
   bossCurrentHealthSoFar = bossStartingHealth;
   document.getElementById('Boss-Health').textContent = bossStartingHealth;
   document.getElementById("green-health").style.width = "50%";
@@ -381,7 +392,43 @@ function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPla
       });
     }
   }
+
+  // sort moves array by score from highest to lowest
+  moves.sort((a, b) => {
+    if (player === AiPlayer) {
+      return b.score - a.score; // Sort in descending order for AI player
+    } else {
+      return a.score - b.score; // Sort in ascending order for human player
+    }
+  });
+
+  // If difficuly is medium play (Second or Third or forth) best move
+  if(difficulty === 'E'){
+    if(player === humanPlayer){
+      let bestMove = 0;
+      memo[memoKey] = moves[bestMove];
+      return moves[bestMove];
+    }else{
+      let bestMove = Math.min(Math.floor(Math.random() * 3 + 1), moves.length - 1);
+      memo[memoKey] = moves[bestMove];
+      return moves[bestMove];
+    }
+  }
   
+
+  // If difficuly is medium play (First or Second) best move
+  if(difficulty === 'M'){
+    if(player === humanPlayer){
+      let bestMove = 0;
+      memo[memoKey] = moves[bestMove];
+      return moves[bestMove];
+    }else{
+      let bestMove = Math.min(Math.floor(Math.random() * 2), moves.length - 1);
+      memo[memoKey] = moves[bestMove];
+      return moves[bestMove];
+    }
+  }
+
   let bestMove, bestScore;
   if (player === AiPlayer) {
     bestScore = -9000000;
