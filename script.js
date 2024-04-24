@@ -8,9 +8,28 @@ let humanAttackingValues = [0, 0, 0];
 let AiAttackingValues = [0, 0, 0];
 let humanHealingValues = [0, 0];
 let AiHealingValues = [0, 0];
+let memo = {};
 
 startGame();
 
+function botStart(){
+    checkValidate();
+    bestToPlay = bestMove();
+    console.log(bestToPlay)
+    turn(bestToPlay.type, AiPlayer, bestToPlay.amount);
+    // Turn on buttons so user can play next move
+    if(!checkWin(bossCurrentHealthSoFar, AiPlayer))
+    document.querySelectorAll(".to-disable").forEach(element =>{
+      if(element.classList.contains("human-turn-btn")){
+        if(element.classList.contains("human-healing-btn")){
+          if(humanHealing > 0)
+            element.style.pointerEvents = "auto";
+        }else{
+          element.style.pointerEvents = "auto";
+        }
+      }
+      })
+}
 
 function startGame() {
   // reset AI buttons color
@@ -37,24 +56,25 @@ function startGame() {
   })
   idx = 0;
   for(var i=0; i<3; i++){
-    humanAttackingValues[i] = (Math.floor(Math.random() * 15 + 1));
+    let num = (Math.floor(Math.random() * 15 + 1));
+    humanAttackingValues[i] = num;
   }
   document.querySelectorAll('.human-attacking-btn').forEach( element => {
     element.textContent = humanAttackingValues[idx++];
   })
   idx = 0;
   for(var i=0; i<2; i++){
-    AiHealingValues[i] = (Math.floor(Math.random() * 15 + 1));
+    AiHealingValues[i] = humanHealingValues[i];
   }
   document.querySelectorAll('.ai-healing-btn').forEach( element => {
     element.textContent = AiHealingValues[idx++];
   })
   idx = 0;
   for(var i=0; i<3; i++){
-    AiAttackingValues[i] = (Math.floor(Math.random() * 15 + 1));
+    AiAttackingValues[i] = humanAttackingValues[i];
   }
   document.querySelectorAll('.ai-attacking-btn').forEach( element => {
-    element.textContent = AiAttackingValues[idx++];
+    element.textContent = humanAttackingValues[idx++];
   })
   // random Boss health
   bossStartingHealth = Math.floor(Math.random() * 60 + 76);
@@ -74,6 +94,7 @@ function startGame() {
     element.style.pointerEvents = "auto";
     element.style.opacity = "100%";
   })
+  // botStart();
 }
 
 function attack(player, dmg){
@@ -273,9 +294,6 @@ function bestMove(){
   return RET;
 }
   
-
-// Define a memoization table to store computed scores
-let memo = {};
 
 function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPlayed) {
   // Check if the current state is already memoized
