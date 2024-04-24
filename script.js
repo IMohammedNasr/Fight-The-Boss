@@ -8,9 +8,34 @@ let humanAttackingValues = [0, 0, 0];
 let AiAttackingValues = [0, 0, 0];
 let humanHealingValues = [0, 0];
 let AiHealingValues = [0, 0];
+let startTurn;
 let memo = {};
 
-startGame();
+
+function selectTurn(who){
+  startTurn = who;
+  document.querySelector('.selectWhoStarts').style.display = "none";
+  startGame();
+}
+
+function startNewGame(){
+    document.querySelector('.selectWhoStarts').style.display = "block";
+    // reset AI buttons color
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+      btn.style.backgroundColor = "#fbeee0";
+    });
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    //remove winner window
+    document.querySelector(".endgame").style.display = "none";
+    document.querySelector(".endgame .text").innerText = "";
+    document.querySelectorAll('.human-healing-btn').forEach(element => {
+      element.style.pointerEvents = "none";
+    })
+}
+
+
 
 function botStart(){
     checkValidate();
@@ -94,7 +119,8 @@ function startGame() {
     element.style.pointerEvents = "auto";
     element.style.opacity = "100%";
   })
-  // botStart();
+  if(startTurn === "B")
+      botStart();
 }
 
 function attack(player, dmg){
