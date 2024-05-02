@@ -1,1 +1,436 @@
-const v=b;(function(c,d){const t=b,e=c();while(!![]){try{const f=-parseInt(t(0x1cf))/0x1+-parseInt(t(0x1e3))/0x2+parseInt(t(0x1f3))/0x3+-parseInt(t(0x1c1))/0x4*(-parseInt(t(0x1f9))/0x5)+-parseInt(t(0x1d5))/0x6+-parseInt(t(0x1dd))/0x7+parseInt(t(0x1da))/0x8;if(f===d)break;else e['push'](e['shift']());}catch(g){e['push'](e['shift']());}}}(a,0xd0e2a));function hi(){const u=b;console['log'](u(0x1c6));}let humanPlayer=v(0x1dc),AiPlayer=v(0x1cb),bossStartingHealth,bossCurrentHealthSoFar,humanHealing,AIHealing,humanAttackingValues=[0x0,0x0,0x0],AiAttackingValues=[0x0,0x0,0x0],humanHealingValues=[0x0,0x0],AiHealingValues=[0x0,0x0],startTurn,difficulty,memo={};function selectTurn(c){const w=v;startTurn=c,document[w(0x1e6)](w(0x1f5))[w(0x1c2)][w(0x1d1)]=w(0x1e2),startGame();}function showTurnSelection(){const x=v;document[x(0x1e6)](x(0x1f5))[x(0x1c2)][x(0x1d1)]=x(0x1ca);}function chooseDiff(c){const y=v;difficulty=c,document['querySelector'](y(0x1fd))[y(0x1c2)][y(0x1d1)]=y(0x1e2),showTurnSelection();}function startNewGame(){const z=v;document[z(0x1e6)](z(0x1fd))[z(0x1c2)][z(0x1d1)]=z(0x1ca),document[z(0x1cd)](z(0x1c4))[z(0x1ed)](c=>{const A=z;c[A(0x1c2)][A(0x1d0)]=A(0x1ef);}),document[z(0x1cd)](z(0x1d4))[z(0x1ed)](c=>{const B=z;c['style'][B(0x1d0)]=B(0x1ef);}),document[z(0x1e6)](z(0x1c3))[z(0x1c2)][z(0x1d1)]=z(0x1e2),document[z(0x1e6)](z(0x1c0))[z(0x1df)]='',document[z(0x1cd)](z(0x1e1))[z(0x1ed)](c=>{const C=z;c[C(0x1c2)][C(0x1e7)]=C(0x1e2);}),document[z(0x1cd)](z(0x1fc))[z(0x1ed)](c=>{const D=z;c[D(0x1c2)]['pointerEvents']=D(0x1e2);});}function botStart(){const E=v;checkValidate(),bestToPlay=bestMove(),turn(bestToPlay[E(0x1fa)],AiPlayer,bestToPlay[E(0x1f1)]);if(!checkWin(bossCurrentHealthSoFar,AiPlayer))document[E(0x1cd)](E(0x1d2))[E(0x1ed)](c=>{const F=E;if(c[F(0x1f6)][F(0x1f4)](F(0x1fb))){if(c[F(0x1f6)][F(0x1f4)](F(0x1ec))){if(humanHealing>0x0)c[F(0x1c2)][F(0x1e7)]=F(0x1bf);}else c[F(0x1c2)]['pointerEvents']=F(0x1bf);}});}function startGame(){const G=v;document[G(0x1cd)](G(0x1c4))[G(0x1ed)](h=>{const H=G;h['style'][H(0x1d0)]=H(0x1ef);}),document[G(0x1cd)](G(0x1d4))[G(0x1ed)](h=>{const I=G;h[I(0x1c2)][I(0x1d0)]=I(0x1ef);}),document[G(0x1e6)](G(0x1c3))[G(0x1c2)][G(0x1d1)]=G(0x1e2),document[G(0x1e6)]('.endgame\x20.text')[G(0x1df)]='',document['querySelectorAll'](G(0x1d2))[G(0x1ed)](h=>{const J=G;if(h[J(0x1f6)][J(0x1f4)](J(0x1fb)))h[J(0x1c2)][J(0x1e7)]=J(0x1bf);});let c=0x0;for(var d=0x0;d<0x2;d++){humanHealingValues[d]=Math[G(0x1de)](Math[G(0x1e4)]()*0x14+0x1);}document[G(0x1cd)](G(0x1e1))[G(0x1ed)](h=>{const K=G;h[K(0x1ea)]=humanHealingValues[c++];}),c=0x0;for(var d=0x0;d<0x3;d++){let h=Math[G(0x1de)](Math[G(0x1e4)]()*0x14+0x1);humanAttackingValues[d]=h;}document[G(0x1cd)](G(0x1fc))[G(0x1ed)](j=>{const L=G;j[L(0x1ea)]=humanAttackingValues[c++];}),c=0x0;for(var d=0x0;d<0x2;d++){AiHealingValues[d]=humanHealingValues[d];}document[G(0x1cd)](G(0x1c4))[G(0x1ed)](j=>{const M=G;j[M(0x1ea)]=AiHealingValues[c++];}),c=0x0;for(var d=0x0;d<0x3;d++){AiAttackingValues[d]=humanAttackingValues[d];}document[G(0x1cd)](G(0x1d4))[G(0x1ed)](j=>{const N=G;j[N(0x1ea)]=humanAttackingValues[c++];}),bossStartingHealth=Math[G(0x1de)](Math[G(0x1e4)]()*0x4c+0x4c),bossCurrentHealthSoFar=bossStartingHealth,document[G(0x1ce)](G(0x1e5))[G(0x1ea)]=bossStartingHealth,document[G(0x1ce)](G(0x1d8))[G(0x1c2)][G(0x1c9)]=G(0x1be);let e=document[G(0x1ce)](G(0x1cc)),f=document[G(0x1ce)](G(0x1e8)),g=Math[G(0x1de)](Math[G(0x1e4)]()*0x6+0x1);e[G(0x1ea)]=g+G(0x1f2),f[G(0x1ea)]=g+G(0x1f2),AIHealing=g,humanHealing=g,document['querySelectorAll'](G(0x1e1))[G(0x1ed)](j=>{const O=G;j[O(0x1c2)][O(0x1e7)]=O(0x1bf),j[O(0x1c2)][O(0x1e0)]=O(0x1eb);});if(startTurn==='B')botStart();}function attack(c,d){const P=v;let e=parseInt(document[P(0x1ce)](P(0x1e5))[P(0x1bd)]),f=document[P(0x1ce)](P(0x1d8))[P(0x1c2)][P(0x1c9)];if(e!=bossCurrentHealthSoFar)e=bossCurrentHealthSoFar;f=parseInt(f[P(0x1c8)](0x0,f[P(0x1d3)]-0x1));let g=Math[P(0x1d7)](e-d,0x0),h=g/e;document[P(0x1ce)](P(0x1d8))[P(0x1c2)][P(0x1c9)]=h*f+'%',document[P(0x1ce)](P(0x1e5))[P(0x1ea)]=g,bossCurrentHealthSoFar=g;if(c===AiPlayer){document[P(0x1cd)](P(0x1c4))[P(0x1ed)](j=>{const Q=P;j[Q(0x1c2)][Q(0x1d0)]=Q(0x1ef);}),document[P(0x1cd)](P(0x1d4))[P(0x1ed)](j=>{const R=P;j[R(0x1c2)][R(0x1d0)]=R(0x1ef);});let i=0x0;document[P(0x1cd)](P(0x1d4))[P(0x1ed)](j=>{const S=P;let k=parseInt(j[S(0x1ea)]);d===k&&!i&&(j[S(0x1c2)][S(0x1d0)]=S(0x1f0),i=0x1);});}}function heal(c,d){const T=v;if(c===humanPlayer){let j=document[T(0x1ce)](T(0x1cc)),k=parseInt(j[T(0x1ea)][T(0x1ee)](/\d+/)[0x0])-0x1;if(k<0x0)return;humanHealing--,j[T(0x1ea)]=k+T(0x1f2),k===0x0&&document['querySelectorAll'](T(0x1e1))[T(0x1ed)](l=>{const U=T;l[U(0x1c2)][U(0x1e7)]=U(0x1e2),l[U(0x1c2)][U(0x1e0)]=U(0x1be);});}else{document[T(0x1cd)](T(0x1c4))[T(0x1ed)](o=>{const V=T;o[V(0x1c2)][V(0x1d0)]=V(0x1ef);}),document[T(0x1cd)](T(0x1d4))[T(0x1ed)](o=>{const W=T;o[W(0x1c2)][W(0x1d0)]=W(0x1ef);});let l=document['getElementById'](T(0x1e8)),m=parseInt(l[T(0x1ea)][T(0x1ee)](/\d+/)[0x0])-0x1;if(m<0x0)return;AIHealing--,l[T(0x1ea)]=m+T(0x1f2);let n=0x0;document[T(0x1cd)]('.ai-healing-btn')[T(0x1ed)](o=>{const X=T;let p=parseInt(o[X(0x1ea)]);d===p&&!n&&(o[X(0x1c2)][X(0x1d0)]=X(0x1f0),n=0x1);});}let e=parseInt(document[T(0x1ce)]('Boss-Health')[T(0x1bd)]);if(e!=bossCurrentHealthSoFar)e=bossCurrentHealthSoFar;let f=T(0x1be);f=parseInt(f[T(0x1c8)](0x0,f[T(0x1d3)]-0x1));let g=Math[T(0x1d7)](e+d,0x0),h=g/bossStartingHealth,i=Math[T(0x1f8)](0x32,h*f);document[T(0x1ce)](T(0x1d8))[T(0x1c2)]['width']=Math['min'](0x32,h*Math[T(0x1d7)](0x1,f))+'%',document[T(0x1ce)](T(0x1e5))[T(0x1ea)]=g,bossCurrentHealthSoFar=g,bossStartingHealth=Math[T(0x1d7)](bossStartingHealth,g);}function checkValidate(){const Y=v;let c=0x0;document[Y(0x1cd)](Y(0x1e1))['forEach'](f=>{const Z=Y;f[Z(0x1ea)]=humanHealingValues[c++];}),c=0x0,document[Y(0x1cd)](Y(0x1fc))[Y(0x1ed)](f=>{const a0=Y;f[a0(0x1ea)]=humanAttackingValues[c++];}),c=0x0,document[Y(0x1cd)](Y(0x1c4))['forEach'](f=>{const a1=Y;f[a1(0x1ea)]=AiHealingValues[c++];}),c=0x0,document[Y(0x1cd)](Y(0x1d4))[Y(0x1ed)](f=>{const a2=Y;f[a2(0x1ea)]=AiAttackingValues[c++];});let d=document[Y(0x1ce)](Y(0x1cc)),e=document[Y(0x1ce)](Y(0x1e8));d[Y(0x1ea)]=humanHealing+'\x20Healing\x20remaining',e['textContent']=AIHealing+Y(0x1f2);}function turnClick(c,d,e){const a3=v;checkValidate(),e=d[a3(0x1f6)]['contains'](a3(0x1ec))?'heal':a3(0x1e9),c=d[a3(0x1f6)][a3(0x1f4)](a3(0x1fb))?a3(0x1dc):a3(0x1cb);let f=e==='attack'||e===a3(0x1c5)&&c===humanPlayer&&humanHealing!=0x0?!![]:![];document[a3(0x1cd)]('.to-disable')[a3(0x1ed)](g=>{const a4=a3;g['style'][a4(0x1e7)]=a4(0x1e2);});if(f){turn(e,c,parseInt(d[a3(0x1ea)]));if(!checkWin(bossCurrentHealthSoFar,humanPlayer)){checkValidate(),bestToPlay=bestMove(),turn(bestToPlay[a3(0x1fa)],AiPlayer,bestToPlay[a3(0x1f1)]);if(!checkWin(bossCurrentHealthSoFar,AiPlayer))document[a3(0x1cd)](a3(0x1d2))[a3(0x1ed)](g=>{const a5=a3;if(g[a5(0x1f6)][a5(0x1f4)](a5(0x1fb))){if(g[a5(0x1f6)][a5(0x1f4)](a5(0x1ec))){if(humanHealing>0x0)g[a5(0x1c2)][a5(0x1e7)]=a5(0x1bf);}else g[a5(0x1c2)]['pointerEvents']=a5(0x1bf);}});}}}function a(){const ai=['random','Boss-Health','querySelector','pointerEvents','AI-Healing-Times','attack','textContent','100%','human-healing-btn','forEach','match','#fbeee0','orange','amount','\x20Healing\x20remaining','1610880HkGUFT','contains','.selectWhoStarts','classList','sort','min','864475velUAX','type','human-turn-btn','.human-attacking-btn','.selectDifficulty','innerHTML','50%','auto','.endgame\x20.text','8JpdAPb','style','.endgame','.ai-healing-btn','heal','Hello\x20World!','score','substring','width','block','AiPlayer','Human-Healing-Times','querySelectorAll','getElementById','482836SqLKZz','backgroundColor','display','.to-disable','length','.ai-attacking-btn','849756mtRAhB','You\x20Lost','max','green-health','push','24111472WeaEVB','You\x20Won!','humanPlayer','6284096wwhRpd','floor','innerText','opacity','.human-healing-btn','none','3037800fBidsa'];a=function(){return ai;};return a();}function turn(c,d,e){const a6=v;if(c==a6(0x1e9)){attack(d,e);let f=checkWin(bossCurrentHealthSoFar,d);if(f)gameOver(f);}else heal(d,e);}function checkWin(c,d){let e=null;if(c<=0x0)e=d;return e;}function b(c,d){const e=a();return b=function(f,g){f=f-0x1bd;let h=e[f];return h;},b(c,d);}function gameOver(c){const a7=v;document[a7(0x1cd)](a7(0x1d2))[a7(0x1ed)](d=>{const a8=a7;d[a8(0x1c2)][a8(0x1e7)]=a8(0x1e2);}),declareWinner(c===humanPlayer?a7(0x1db):a7(0x1d6));}function declareWinner(c){const a9=v;document[a9(0x1e6)](a9(0x1c3))[a9(0x1c2)][a9(0x1d1)]=a9(0x1ca),document[a9(0x1e6)](a9(0x1c0))[a9(0x1df)]=c;}function bestMove(){let c=minimax(AiPlayer,bossCurrentHealthSoFar,AIHealing,humanHealing,0x0);return c;}function minimax(c,d,e,f,g){const aa=v;let h=c+'-'+d+'-'+e+'-'+f+'-'+g;if(memo[h])return memo[h];const j=d<=0x0?!![]:![];if(j===!![]&&c===AiPlayer)return{'score':g-0x64};else{if(j===!![]&&c===humanPlayer)return{'score':0x64-g};}var k=[];c===AiPlayer?e>0x0?(document[aa(0x1cd)](aa(0x1c4))[aa(0x1ed)](n=>{const ab=aa;let o=parseInt(n[ab(0x1ea)]),p=minimax(humanPlayer,d+o,e-0x1,f,g+0x1)[ab(0x1c7)];k[ab(0x1d9)]({'score':p,'type':ab(0x1c5),'amount':o});}),document[aa(0x1cd)]('.ai-attacking-btn')[aa(0x1ed)](n=>{const ac=aa;let o=parseInt(n[ac(0x1ea)]),p=minimax(humanPlayer,d-o,e,f,g+0x1)[ac(0x1c7)];k[ac(0x1d9)]({'score':p,'type':ac(0x1e9),'amount':o});})):document[aa(0x1cd)](aa(0x1d4))[aa(0x1ed)](n=>{const ad=aa;let o=parseInt(n[ad(0x1ea)]),p=minimax(humanPlayer,d-o,e,f,g+0x1)[ad(0x1c7)];k[ad(0x1d9)]({'score':p,'type':ad(0x1e9),'amount':o});}):f>0x0?(document['querySelectorAll'](aa(0x1e1))['forEach'](n=>{const ae=aa;let o=parseInt(n[ae(0x1ea)]),p=minimax(AiPlayer,d+o,e,f-0x1,g+0x1)[ae(0x1c7)];k[ae(0x1d9)]({'score':p,'type':ae(0x1c5),'amount':o});}),document[aa(0x1cd)](aa(0x1fc))[aa(0x1ed)](n=>{const af=aa;let o=parseInt(n[af(0x1ea)]),p=minimax(AiPlayer,d-o,e,f,g+0x1)[af(0x1c7)];k[af(0x1d9)]({'score':p,'type':af(0x1e9),'amount':o});})):document[aa(0x1cd)](aa(0x1fc))[aa(0x1ed)](n=>{const ag=aa;let o=parseInt(n[ag(0x1ea)]),p=minimax(AiPlayer,d-o,e,f,g+0x1)[ag(0x1c7)];k[ag(0x1d9)]({'score':p,'type':ag(0x1e9),'amount':o});});k[aa(0x1f7)]((n,o)=>{const ah=aa;return c===AiPlayer?o[ah(0x1c7)]-n[ah(0x1c7)]:n[ah(0x1c7)]-o[ah(0x1c7)];});if(difficulty==='E'){if(c===humanPlayer){let n=0x0;return memo[h]=k[n],k[n];}else{let o=k[0x0][aa(0x1c7)]===0x63?0x0:Math[aa(0x1f8)](Math[aa(0x1de)](Math[aa(0x1e4)]()*0x3+0x1),k['length']-0x1);return memo[h]=k[o],k[o];}}if(difficulty==='M'){if(c===humanPlayer){let p=0x0;return memo[h]=k[p],k[p];}else{let q=Math[aa(0x1f8)](Math[aa(0x1de)](Math['random']()*0x2),k[aa(0x1d3)]-0x1);return memo[h]=k[q],k[q];}}let l,m;if(c===AiPlayer){m=-0x895440;for(let r=0x0;r<k[aa(0x1d3)];r++){k[r][aa(0x1c7)]>m&&(m=k[r][aa(0x1c7)],l=r);}}else{m=0x895440;for(let s=0x0;s<k[aa(0x1d3)];s++){k[s][aa(0x1c7)]<m&&(m=k[s][aa(0x1c7)],l=s);}}return memo[h]=k[l],k[l];}hi();
+let humanPlayer = 'humanPlayer';
+let AiPlayer = 'AiPlayer';
+let bossStartingHealth;
+let bossCurrentHealthSoFar;
+let humanHealing;
+let AIHealing;
+let humanAttackingValues = [0, 0, 0];
+let AiAttackingValues = [0, 0, 0];
+let humanHealingValues = [0, 0];
+let AiHealingValues = [0, 0];
+let startTurn;
+let difficulty;
+let memo = {};
+
+
+function selectTurn(who){
+  startTurn = who;
+  document.querySelector('.selectWhoStarts').style.display = "none";
+  startGame();
+}
+
+function showTurnSelection(){
+  document.querySelector('.selectWhoStarts').style.display = "block";
+}
+
+function chooseDiff(choice){
+  difficulty = choice;
+  document.querySelector('.selectDifficulty').style.display = "none";
+  showTurnSelection();
+}
+
+function startNewGame(){
+    document.querySelector('.selectDifficulty').style.display = "block";
+    // reset AI buttons color
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+      btn.style.backgroundColor = "#fbeee0";
+    });
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    //remove winner window
+    document.querySelector(".endgame").style.display = "none";
+    document.querySelector(".endgame .text").innerText = "";
+    document.querySelectorAll('.human-healing-btn').forEach(element => {
+      element.style.pointerEvents = "none";
+    })
+    document.querySelectorAll('.human-attacking-btn').forEach(element => {
+      element.style.pointerEvents = "none";
+    })
+}
+
+
+
+function botStart(){
+    checkValidate();
+    bestToPlay = bestMove();
+    // console.log(bestToPlay)
+    turn(bestToPlay.type, AiPlayer, bestToPlay.amount);
+    // Turn on buttons so user can play next move
+    if(!checkWin(bossCurrentHealthSoFar, AiPlayer))
+    document.querySelectorAll(".to-disable").forEach(element =>{
+      if(element.classList.contains("human-turn-btn")){
+        if(element.classList.contains("human-healing-btn")){
+          if(humanHealing > 0)
+            element.style.pointerEvents = "auto";
+        }else{
+          element.style.pointerEvents = "auto";
+        }
+      }
+      })
+}
+
+function startGame() {
+  // reset DP
+  memo = {};
+  // reset AI buttons color
+  document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+    btn.style.backgroundColor = "#fbeee0";
+  });
+  document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+      btn.style.backgroundColor = "#fbeee0";
+  });
+  //remove winner window
+  document.querySelector(".endgame").style.display = "none";
+  document.querySelector(".endgame .text").innerText = "";
+  document.querySelectorAll(".to-disable").forEach(element =>{
+    if(element.classList.contains("human-turn-btn"))
+      element.style.pointerEvents = "auto";
+  })
+  // random-numbers for healing Buttons;
+  let idx = 0;
+  for(var i=0; i<2; i++){
+    humanHealingValues[i] = (Math.floor(Math.random() * 20 + 1));
+  }
+  document.querySelectorAll('.human-healing-btn').forEach( element => {
+    element.textContent = humanHealingValues[idx++];
+  })
+  idx = 0;
+  for(var i=0; i<3; i++){
+    let num = (Math.floor(Math.random() * 20 + 1));
+    humanAttackingValues[i] = num;
+  }
+  document.querySelectorAll('.human-attacking-btn').forEach( element => {
+    element.textContent = humanAttackingValues[idx++];
+  })
+  idx = 0;
+  for(var i=0; i<2; i++){
+    AiHealingValues[i] = humanHealingValues[i];
+  }
+  document.querySelectorAll('.ai-healing-btn').forEach( element => {
+    element.textContent = AiHealingValues[idx++];
+  })
+  idx = 0;
+  for(var i=0; i<3; i++){
+    AiAttackingValues[i] = humanAttackingValues[i];
+  }
+  document.querySelectorAll('.ai-attacking-btn').forEach( element => {
+    element.textContent = humanAttackingValues[idx++];
+  })
+  // random Boss health
+  bossStartingHealth = Math.floor(Math.random() * 76 + 76);
+  bossCurrentHealthSoFar = bossStartingHealth;
+  document.getElementById('Boss-Health').textContent = bossStartingHealth;
+  document.getElementById("green-health").style.width = "50%";
+  // reset Healing Attemps
+  let humanElement = document.getElementById("Human-Healing-Times");
+  let aiElement = document.getElementById("AI-Healing-Times");
+  let randomAttemps = Math.floor(Math.random() * 6 + 1);
+  humanElement.textContent = `${randomAttemps} Healing remaining`
+  aiElement.textContent = `${randomAttemps} Healing remaining`
+  AIHealing = randomAttemps;
+  humanHealing = randomAttemps;
+  // rest Human Healing Opacity
+  document.querySelectorAll('.human-healing-btn').forEach(element => {
+    element.style.pointerEvents = "auto";
+    element.style.opacity = "100%";
+  })
+  if(startTurn === "B")
+      botStart();
+}
+
+function attack(player, dmg){
+  let prevHealth = parseInt(document.getElementById("Boss-Health").innerHTML);
+  let prevPercentage = document.getElementById("green-health").style.width;
+  if(prevHealth != bossCurrentHealthSoFar)
+      prevHealth = bossCurrentHealthSoFar;
+  prevPercentage = parseInt(prevPercentage.substring(0, prevPercentage.length - 1));
+  let newHealth = Math.max(prevHealth - dmg, 0);
+  let ratio = newHealth / prevHealth;
+  document.getElementById("green-health").style.width = `${ratio * prevPercentage}%`;
+  // console.log(document.getElementById("green-health").style.width);
+  document.getElementById('Boss-Health').textContent = newHealth;
+  bossCurrentHealthSoFar = newHealth;
+  if(player === AiPlayer){
+    // reset AI buttons color
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    // Coloring the new button
+    let found = 0;
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+      let amount = parseInt(btn.textContent);
+      if(dmg === amount && !found){
+        btn.style.backgroundColor = "orange";
+        found = 1;
+      }
+    });
+  }
+}
+
+function heal(player, healing){
+  if(player === humanPlayer){
+    // decreasing attemtps;
+    let element = document.getElementById("Human-Healing-Times");
+    let attempts = parseInt(element.textContent.match(/\d+/)[0]) - 1;
+    // console.log(`Can Heal ${attempts}`)
+    if(attempts < 0){
+      return;
+    }
+    humanHealing--;
+    // console.log(attempts);
+    element.textContent = `${attempts} Healing remaining`;
+    if(attempts === 0){
+      document.querySelectorAll('.human-healing-btn').forEach(element => {
+        element.style.pointerEvents = "none";
+        element.style.opacity = "50%";
+      })
+    }
+  }else{
+    // reset AI buttons color
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        btn.style.backgroundColor = "#fbeee0";
+    });
+    // decreasing attemtps;
+    let element = document.getElementById("AI-Healing-Times");
+    let attempts = parseInt(element.textContent.match(/\d+/)[0]) - 1;
+    if(attempts < 0){
+      return;
+    }
+    AIHealing--;
+    // console.log(attempts);
+    element.textContent = `${attempts} Healing remaining`;
+    // Coloring the new Button
+    let found = 0;
+    document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+      let amount = parseInt(btn.textContent);
+      if(healing === amount && !found){
+        btn.style.backgroundColor = "orange";
+        found = 1;
+      }
+    });
+  }
+  // Healing Process
+  let prevHealth = parseInt(document.getElementById("Boss-Health").innerHTML);
+  if(prevHealth != bossCurrentHealthSoFar)
+      prevHealth = bossCurrentHealthSoFar;
+  let prevPercentage = "50%"
+  prevPercentage = parseInt(prevPercentage.substring(0, prevPercentage.length - 1));
+  let newHealth = Math.max(prevHealth + healing, 0);
+  let ratio = newHealth / bossStartingHealth;
+  let newWidth = Math.min(50, ratio * prevPercentage);
+  // console.log(`NewWidth = ${newWidth}`)
+  document.getElementById("green-health").style.width = `${Math.min(50, ratio * Math.max(1, prevPercentage))}%`;
+  // console.log(`${Math.min(50, ratio * prevPercentage)}%`);
+  document.getElementById('Boss-Health').textContent = newHealth;
+  bossCurrentHealthSoFar = newHealth;
+  // console.log(prevHealth);
+  bossStartingHealth = Math.max(bossStartingHealth, newHealth)
+}
+
+
+// Check user didn't change numbers
+function checkValidate(){
+  let idx = 0;
+  document.querySelectorAll('.human-healing-btn').forEach( element => {
+    element.textContent = humanHealingValues[idx++];
+  })
+  idx = 0;
+  document.querySelectorAll('.human-attacking-btn').forEach( element => {
+    element.textContent = humanAttackingValues[idx++];
+  })
+  idx = 0;
+  document.querySelectorAll('.ai-healing-btn').forEach( element => {
+    element.textContent = AiHealingValues[idx++];
+  })
+  idx = 0;
+  document.querySelectorAll('.ai-attacking-btn').forEach( element => {
+    element.textContent = AiAttackingValues[idx++];
+  })
+  //set healing attemps
+  let element = document.getElementById("Human-Healing-Times");
+  let element2 = document.getElementById("AI-Healing-Times");
+  element.textContent = `${humanHealing} Healing remaining`;
+  element2.textContent = `${AIHealing} Healing remaining`;
+}
+
+// User Click To do an action
+function turnClick(player, element, type) {
+  checkValidate();
+  type = element.classList.contains("human-healing-btn") ? 'heal' : 'attack';
+  player = element.classList.contains("human-turn-btn") ? 'humanPlayer' : 'AiPlayer';
+  let isCorrectMove = type === 'attack' || (type === 'heal' && player === humanPlayer && humanHealing != 0) ? true : false;
+  // isCorrectMove = isCorrectMove || (type === 'heal' && player === 'AiPlayer' && AIHealing != 0);
+
+  // Disable buttons until finish checking the move
+  document.querySelectorAll(".to-disable").forEach(element =>{
+    element.style.pointerEvents = "none";
+  })
+
+  if (isCorrectMove) {
+    turn(type, player, parseInt(element.textContent));
+    if(!checkWin(bossCurrentHealthSoFar, humanPlayer)){
+      checkValidate();
+      bestToPlay = bestMove();
+      // console.log(bestToPlay)
+      turn(bestToPlay.type, AiPlayer, bestToPlay.amount);
+      // Turn on buttons so user can play next move
+      if(!checkWin(bossCurrentHealthSoFar, AiPlayer))
+      document.querySelectorAll(".to-disable").forEach(element =>{
+        if(element.classList.contains("human-turn-btn")){
+          if(element.classList.contains("human-healing-btn")){
+            if(humanHealing > 0)
+              element.style.pointerEvents = "auto";
+          }else{
+            element.style.pointerEvents = "auto";
+          }
+        }
+        })
+    }
+  }
+}
+
+// Do the turn process
+
+function turn(type, player, amount) {
+  if(type == 'attack'){
+    attack(player, amount)
+    let gameWon = checkWin(bossCurrentHealthSoFar, player);
+    if (gameWon) gameOver(gameWon);
+  }else{
+    heal(player, amount)
+  }
+}
+
+// Check if a player has already won
+
+function checkWin(health, player) {
+  let gameWon = null;
+  if(health <= 0)
+    gameWon = player;
+  return gameWon;
+}
+
+// Game over process window
+
+function gameOver(gameWon){
+  document.querySelectorAll(".to-disable").forEach(element =>{
+    element.style.pointerEvents = "none";
+  })
+  declareWinner(gameWon === humanPlayer ? "You Won!" : "You Lost");
+}
+
+function declareWinner(whoWon) {
+  document.querySelector(".endgame").style.display = "block";
+  document.querySelector(".endgame .text").innerText = whoWon;
+}
+
+function bestMove(){
+  let RET = minimax(AiPlayer, bossCurrentHealthSoFar, AIHealing, humanHealing, 0);
+  return RET;
+}
+  
+
+function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPlayed) {
+  // Check if the current state is already memoized
+  let memoKey = `${player}-${bossHealth}-${aiHealAttempts}-${humanHealAttempts}-${turnsPlayed}`;
+  if (memo[memoKey]) {
+    return memo[memoKey];
+  }
+
+  const gameState = bossHealth <= 0 ? true : false;
+  
+  if (gameState === true && player === AiPlayer) {
+    return { score: turnsPlayed - 1000 };
+  } else if (gameState === true && player === humanPlayer) {
+    return { score: 1000 - turnsPlayed};
+  }
+  
+  var moves = [];
+  
+  if (player === AiPlayer) {
+    if (aiHealAttempts > 0) {
+      // AI try to use heal
+      document.querySelectorAll('.ai-healing-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(humanPlayer, bossHealth + amount, aiHealAttempts - 1, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'heal', amount: amount });
+      });
+      // AI try to attack
+      document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(humanPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    } else {
+      // AI cannot heal, attack with one of the three values
+      document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(humanPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    }
+  } else {
+    if (humanHealAttempts > 0) {
+      // Human try to heal
+      document.querySelectorAll('.human-healing-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(AiPlayer, bossHealth + amount, aiHealAttempts, humanHealAttempts - 1, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'heal', amount: amount });
+      });
+      document.querySelectorAll('.human-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    } else {
+      // Human cannot heal, attack with one of the three values
+      document.querySelectorAll('.human-attacking-btn').forEach(btn => {
+        let amount = parseInt(btn.textContent);
+        let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+        moves.push({ score: score, type: 'attack', amount: amount });
+      });
+    }
+  }
+
+  // sort moves array by score
+  moves.sort((a, b) => {
+    if (player === AiPlayer) {
+      return b.score - a.score; // Sort in descending order for AI player
+    } else {
+      return a.score - b.score; // Sort in ascending order for human player
+    }
+  });
+
+
+  let bestMove
+
+  // If difficulty is medium play (Second or Third or forth) best move
+  if(difficulty === 'E'){
+    if(player === humanPlayer){
+      bestMove = 0;
+    }else{
+      bestMove = moves[0].score === 99 ? 0 : Math.min(Math.floor(Math.random() * 3 + 1), moves.length - 1);
+    }
+  }else if(difficulty === 'M'){
+    // If difficulty is medium play (First or Second) best move
+    if(player === humanPlayer){
+      bestMove = 0;
+    }else{
+      bestMove = moves[0].score === 99 ? 0 : Math.min(Math.floor(Math.random() * 2), moves.length - 1);
+    }
+  }else{
+    // if difficulty is hart choose best move
+    bestMove = 0;
+  }
+  
+  // Memoize the result before returning
+  memo[memoKey] = moves[bestMove];
+  return moves[bestMove];
+}
