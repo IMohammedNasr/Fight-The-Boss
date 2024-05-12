@@ -392,7 +392,7 @@ function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPla
       let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
       moves.push({ score: score, type: 'attack', amount: amount });
     });
-    
+
   }
 
   // sort moves array by score
@@ -412,14 +412,14 @@ function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPla
     if(player === humanPlayer){
       bestMove = 0;
     }else{
-      bestMove = moves[0].score === 99 ? 0 : Math.min(Math.floor(Math.random() * 3 + 1), moves.length - 1);
+      bestMove = moves[0].score === 999 ? 0 : Math.min(Math.floor(Math.random() * 3 + 1), moves.length - 1);
     }
   }else if(difficulty === 'M'){
     // If difficulty is medium play (First or Second) best move
     if(player === humanPlayer){
       bestMove = 0;
     }else{
-      bestMove = moves[0].score === 99 ? 0 : Math.min(Math.floor(Math.random() * 2), moves.length - 1);
+      bestMove = moves[0].score === 999 ? 0 : Math.min(Math.floor(Math.random() * 2), moves.length - 1);
     }
   }else{
     // if difficulty is hart choose best move
