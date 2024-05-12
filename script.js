@@ -13,16 +13,19 @@ let difficulty;
 let memo = {};
 
 
+function showTurnSelection(){
+  document.querySelector('.selectWhoStarts').style.display = "block";
+}
+
+
 function selectTurn(who){
   startTurn = who;
   document.querySelector('.selectWhoStarts').style.display = "none";
   startGame();
 }
 
-function showTurnSelection(){
-  document.querySelector('.selectWhoStarts').style.display = "block";
-}
 
+// Choose difficulty
 function chooseDiff(choice){
   difficulty = choice;
   document.querySelector('.selectDifficulty').style.display = "none";
@@ -30,6 +33,7 @@ function chooseDiff(choice){
 }
 
 function startNewGame(){
+    // show difficulty selection window
     document.querySelector('.selectDifficulty').style.display = "block";
     // reset AI buttons color
     document.querySelectorAll('.ai-healing-btn').forEach(btn => {
@@ -53,8 +57,8 @@ function startNewGame(){
 
 function botStart(){
     checkValidate();
+    // Get the best move for the AI bot
     bestToPlay = bestMove();
-    // console.log(bestToPlay)
     turn(bestToPlay.type, AiPlayer, bestToPlay.amount);
     // Turn on buttons so user can play next move
     if(!checkWin(bossCurrentHealthSoFar, AiPlayer))
@@ -235,7 +239,7 @@ function heal(player, healing){
 }
 
 
-// Check user didn't change numbers
+// Check user didn't change numbers from
 function checkValidate(){
   let idx = 0;
   document.querySelectorAll('.human-healing-btn').forEach( element => {
@@ -362,21 +366,18 @@ function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPla
         let score = minimax(humanPlayer, bossHealth + amount, aiHealAttempts - 1, humanHealAttempts, turnsPlayed + 1).score;
         moves.push({ score: score, type: 'heal', amount: amount });
       });
-      // AI try to attack
-      document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
-        let amount = parseInt(btn.textContent);
-        let score = minimax(humanPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
-        moves.push({ score: score, type: 'attack', amount: amount });
-      });
-    } else {
-      // AI cannot heal, attack with one of the three values
-      document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
-        let amount = parseInt(btn.textContent);
-        let score = minimax(humanPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
-        moves.push({ score: score, type: 'attack', amount: amount });
-      });
     }
-  } else {
+
+    // AI try to attack
+    document.querySelectorAll('.ai-attacking-btn').forEach(btn => {
+      let amount = parseInt(btn.textContent);
+      let score = minimax(humanPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+      moves.push({ score: score, type: 'attack', amount: amount });
+    });
+
+  } 
+
+  else {
     if (humanHealAttempts > 0) {
       // Human try to heal
       document.querySelectorAll('.human-healing-btn').forEach(btn => {
@@ -384,19 +385,14 @@ function minimax(player, bossHealth, aiHealAttempts, humanHealAttempts, turnsPla
         let score = minimax(AiPlayer, bossHealth + amount, aiHealAttempts, humanHealAttempts - 1, turnsPlayed + 1).score;
         moves.push({ score: score, type: 'heal', amount: amount });
       });
-      document.querySelectorAll('.human-attacking-btn').forEach(btn => {
-        let amount = parseInt(btn.textContent);
-        let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
-        moves.push({ score: score, type: 'attack', amount: amount });
-      });
-    } else {
-      // Human cannot heal, attack with one of the three values
-      document.querySelectorAll('.human-attacking-btn').forEach(btn => {
-        let amount = parseInt(btn.textContent);
-        let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
-        moves.push({ score: score, type: 'attack', amount: amount });
-      });
     }
+
+    document.querySelectorAll('.human-attacking-btn').forEach(btn => {
+      let amount = parseInt(btn.textContent);
+      let score = minimax(AiPlayer, bossHealth - amount, aiHealAttempts, humanHealAttempts, turnsPlayed + 1).score;
+      moves.push({ score: score, type: 'attack', amount: amount });
+    });
+    
   }
 
   // sort moves array by score
